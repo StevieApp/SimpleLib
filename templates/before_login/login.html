@@ -1,0 +1,59 @@
+<!--
+ Copyright 2024 Steve Nginyo
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     https://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="w-100 d-flex" style="height:100vh;">
+        <div class="m-auto">
+            <div>
+                <p class="text-center mb-1">Login</p>
+                <form method="POST" action="/login/">
+                    {% csrf_token %}
+                    <div class="input-group flex-nowrap">   
+                        <input name="username" id="username" type="text" class="form-control" placeholder="Username/Email" aria-label="Username/Email" aria-describedby="addon-wrapping">
+                    </div>
+                    <div class="input-group flex-nowrap">   
+                        <input name="password" id="password" type="text" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="addon-wrapping">
+                    </div>
+                    <span class="input-group-text" id="addon-wrapping">
+                        <button class="btn btn-secondary w-100" type="submit">Login</button>
+                    </span>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </form>
+                <p class="text-center mb-0 mt-1">
+                    Do not have an account?
+                    <a href="/user_register">
+                        Register
+                    </a>
+                </p>
+                <p class="text-center">
+                    <a href="/home" class="text-decoration-none">
+                        <button class="btn btn-small">Home<i class="bi bi-house"></i></button>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

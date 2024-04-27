@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %} Photos of {{ searcher }} {% endblock %}
+
+{% block content %}
+    <div>
+        <div class="container mt-5">
+            <div class="float-end">
+                <form method="POST" action="/search_gallery/">
+                    {% csrf_token %}
+                    <div class="input-group flex-nowrap">   
+                        <input value={{searcher}} name="searcher" id="searcher" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
+                        <input type="hidden" name="nexter" value="{{ request.path }}" id="nexter">
+                        <span class="input-group-text" id="addon-wrapping">
+                            <button class="btn btn-secondary" type="submit">Search</button>
+                        </span>
+                        <a href="/home/" class="text-decoration-none mt-2 ms-2 btn btn-small">
+                            Home <i class="bi bi-house"></i></button>
+                        </a>
+                    </div>
+                </form>
+                
+            </div>
+            <h1 class="mb-5 text-info"> Photos of <i>{{ searcher }}</i></h1>
+            {% if photos|length == 0 %}
+                <div class="d-flex w-100 h-100">
+                    <div class="m-auto">
+                        <h2>There are no images for {{ searcher }}</h2>
+                    </div>
+                </div>
+            {% endif %}
+            {% if photos %}
+                {% if photos|length > 0 %}
+                    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner h-100">
+                            {% for el in photos %}
+                                {% if forloop.counter0 == 0 %}
+                                    <!-- {{ forloop.counter0 }} -->
+                                    <div class="carousel-item active" data-bs-interval="10000">
+                                        <img src="{{el.large2x}}" class="d-block w-100 object-fit-contain rounded-circle" style="height: 500px;" />
+                                    </div>
+                                {% else %}
+                                    <div class="carousel-item" data-bs-interval="2000">
+                                        <img src="{{el.large2x}}" class="d-block w-100 object-fit-contain rounded-circle" style="height: 500px;" />
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <button class="carousel-control-prev bg-secondary" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next bg-secondary" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
