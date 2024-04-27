@@ -16,7 +16,15 @@
 
 SimpleLib Py Project
 
-Login and REgistration and API randomization and search
+Login and Registration and API randomization and search
+
+login details
+username = stevenginyo
+password = 123
+
+superadmin details
+username = hp
+password = 123
 
 Book Images,
 Authors,
